@@ -7,7 +7,7 @@ const ContactState = (props) => {
   const [contacts, setContact] = useState(contactsInitial)
 
   // Add a Note
-  const addContacts = async (title, task, isComplete) => {
+  const addContacts = async (firstName, lastName, phoneNumber) => {
     // CONTACT: API Call
     // API Call
     const response = await fetch(`${host}/api/contact/addContact`, {
@@ -16,7 +16,7 @@ const ContactState = (props) => {
         'Content-Type': 'application/json',
         'auth-token': localStorage.getItem('token'),
       },
-      body: JSON.stringify({ title, task, isComplete }),
+      body: JSON.stringify({ firstName, lastName, phoneNumber }),
     })
 
     const contact = await response.json()

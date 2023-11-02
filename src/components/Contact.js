@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import contactContext from '../context/contactContext'
 import { useNavigate } from 'react-router-dom'
-import Contactitem from './Contactitem'
+import Contactitem from './ContactItem'
 const Contacts = () => {
   let navigate = useNavigate()
   const context = useContext(contactContext)
@@ -27,14 +27,14 @@ const Contacts = () => {
     console.log(currentContact.phoneNumber)
     setContact({
       id: currentContact._id,
-      efirstname: currentContact.firstname,
-      elastname: currentContact.lastname,
+      efirstName: currentContact.firstName,
+      elastName: currentContact.lastName,
       ephoneNumber: currentContact.phoneNumber,
     })
   }
 
   const handleClick = (e) => {
-    editContact(contact.id, contact.efirstname, contact.elastname, contact.ephoneNumber)
+    editContact(contact.id, contact.efirstName, contact.elastName, contact.ephoneNumber)
     refClose.current.click()
   }
 
@@ -47,7 +47,7 @@ const Contacts = () => {
       <div className="display-4 text-primary text-center">Contacts</div>
 
       <div className="container mx-2">
-        {contacts.length === 0 && 'No Contacts to display'}
+        {contact.length === 0 && 'No Contacts to display'}
       </div>
 
       <table className="table">
@@ -110,7 +110,7 @@ const Contacts = () => {
                     className="form-control"
                     id="efirstname"
                     name="efirstname"
-                    value={contact.efirstname}
+                    value={contact.efirstName}
                     aria-describedby="emailHelp"
                     onChange={onChange}
                     minLength={5}
@@ -126,7 +126,7 @@ const Contacts = () => {
                     className="form-control"
                     id="elastname"
                     name="elastname"
-                    value={contact.elastname}
+                    value={contact.elastName}
                     onChange={onChange}
                     minLength={5}
                     required
@@ -136,27 +136,14 @@ const Contacts = () => {
                   <div className="form-check">
                     <input
                       className="form-check-input"
-                      type="radio"
+                      type="number"
                       id="phoneNumber"
-                      value="true"
+                      value={contact.ephoneNumber}
                       name="ephoneNumber"
                       onChange={onChange}
                     />
                     <label className="form-check-label" htmlFor="phoneNumber">
                       Yes
-                    </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      id="phoneNumber"
-                      value="false"
-                      name="ephoneNumber"
-                      onChange={onChange}
-                    />
-                    <label className="form-check-label" htmlFor="phoneNumber">
-                      No
                     </label>
                   </div>
                 </div>
@@ -172,7 +159,7 @@ const Contacts = () => {
                 Close
               </button>
               <button
-                disabled={contact.efirstname.length < 5 || contact.elastname.length < 5}
+                disabled={contact.efirstName.length < 5 || contact.elastName.length < 5}
                 onClick={handleClick}
                 type="button"
                 className="btn btn-dark"

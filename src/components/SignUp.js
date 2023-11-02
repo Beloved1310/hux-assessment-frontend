@@ -13,9 +13,6 @@ function Signup(props) {
     e.preventDefault()
 
     try {
-      if (credentials.password !== credentials.cpassword) {
-        props.showAlert('Password Inccorect', 'info')
-      } else {
         const response = await fetch(
           'https://hux-assessment-backend.vercel.app/api/auth/createUser',
           {
@@ -41,7 +38,7 @@ function Signup(props) {
           navigate('/login')
           props.showAlert('Signup Success', 'success')
         }
-      }
+      
     } catch (error) {
       props.showAlert('db not connected', 'warning')
     }

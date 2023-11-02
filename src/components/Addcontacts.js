@@ -70,7 +70,7 @@ function Addcontacts() {
                 </div>
 
                 <button
-                  disabled={contact.title.length < 5 || contact.task.length < 5}
+                  disabled={contact.firstName.length < 5 || contact.lastName.length < 5}
                   type="submit"
                   className="btn btn-dark mt-2"
                   onClick={handleClick}
