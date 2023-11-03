@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import moment from 'moment'
 import contactContext from '../context/contactContext'
+import {Link, useNavigate } from 'react-router-dom'
 
 function Contactitem(props) {
   const context = useContext(contactContext)
@@ -13,17 +14,6 @@ function Contactitem(props) {
       <td>{contact?.lastName}</td>
       <td>{contact?.phoneNumber}</td>
       <td>{moment(contact.date).format('MMM Do YY')}</td>
-      <td>
-        <input
-          type="checkbox"
-          className="form-check-input"
-          id="isComplete"
-          checked={contact?.isComplete == 'true'}
-          onChange={() => {
-            console.log('ok')
-          }}
-        />
-      </td>
       <td>
         <i
           className="far fa-edit mx-2"
@@ -40,6 +30,7 @@ function Contactitem(props) {
           }}
         ></i>
       </td>
+      <td><Link to={`/contact/fetchContact/${contact?._id}`}>View Contact </Link></td>
     </tr>
   )
 }

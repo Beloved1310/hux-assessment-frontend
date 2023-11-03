@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import contactContext from '../context/contactContext'
-import { useNavigate } from 'react-router-dom'
+import {Link, useNavigate } from 'react-router-dom'
 import Contactitem from './ContactItem'
 const Contacts = () => {
   let navigate = useNavigate()
@@ -64,9 +64,12 @@ const Contacts = () => {
         <tbody>
           {contacts.map((contact) => {
             return (
-              <Contactitem key={contact._id} updateContact={updateContact} contact={contact} />
+              <Contactitem key={contact._id} updateContact={updateContact} contact={contact} />  
+              
             )
+            
           })}
+            
         </tbody>
       </table>
 
@@ -102,14 +105,14 @@ const Contacts = () => {
             <div className="modal-body">
               <form className="my-3">
                 <div className="mb-3">
-                  <label htmlFor="firstname" className="form-label">
+                  <label htmlFor="firstName" className="form-label">
                     FirstName
                   </label>
                   <input
                     type="text"
                     className="form-control"
-                    id="efirstname"
-                    name="efirstname"
+                    id="efirstName"
+                    name="efirstName"
                     value={contact.efirstName}
                     aria-describedby="emailHelp"
                     onChange={onChange}
@@ -118,14 +121,14 @@ const Contacts = () => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="lastname" className="form-label">
+                  <label htmlFor="lastName" className="form-label">
                     LastName
                   </label>
                   <input
                     type="text"
                     className="form-control"
-                    id="elastname"
-                    name="elastname"
+                    id="elastName"
+                    name="elastName"
                     value={contact.elastName}
                     onChange={onChange}
                     minLength={5}
@@ -133,19 +136,19 @@ const Contacts = () => {
                   />
                 </div>
                 <div className="mb-3">
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="number"
-                      id="phoneNumber"
-                      value={contact.ephoneNumber}
-                      name="ephoneNumber"
-                      onChange={onChange}
-                    />
-                    <label className="form-check-label" htmlFor="phoneNumber">
-                      Yes
-                    </label>
-                  </div>
+                  <label htmlFor="phoneNumber" className="form-label">
+                    Phone Number
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="ephoneNumber"
+                    name="ephoneNumber"
+                    value={contact.ephoneNumber}
+                    onChange={onChange}
+                    minLength={5}
+                    required
+                  />
                 </div>
               </form>
             </div>

@@ -7,7 +7,6 @@ function Addcontacts() {
   const { addContacts } = context
 
   const [contact, setContact] = useState({ firstName: '', lastName: '', phoneNumber: '' })
-
   const handleClick = (e) => {
     e.preventDefault()
     addContacts(contact.firstName, contact.lastName, contact.phoneNumber)

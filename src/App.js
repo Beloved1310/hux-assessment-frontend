@@ -7,6 +7,7 @@ import Alert from './components/Alert'
 import Signup from './components/Signup'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import ContactState from './context/contactState'
+import ContactDetail from './components/ContactDetail'
 
 function App() {
   const [alert, setAlert] = useState(null)
@@ -21,7 +22,7 @@ function App() {
     }, 2000)
   }
   return (
-    <>
+    <div>
       <ContactState showAlert={showAlert}>
         <Router>
           <Navbar title="CONTACT INFORMATION APPLICATION" showAlert={showAlert} />
@@ -43,10 +44,15 @@ function App() {
               path="/login"
               element={<Login showAlert={showAlert} />}
             />
+            <Route exact
+            path="/contact/fetchContact/:id"   
+            element={<ContactDetail showAlert={ContactDetail}/>}
+            />
           </Routes>
+          
         </Router>
       </ContactState>
-    </>
+    </div>
   )
 }
 

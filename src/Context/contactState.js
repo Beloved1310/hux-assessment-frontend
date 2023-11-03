@@ -10,6 +10,8 @@ const ContactState = (props) => {
   const addContacts = async (firstName, lastName, phoneNumber) => {
     // CONTACT: API Call
     // API Call
+    console.log(JSON.stringify({ firstName, lastName, phoneNumber }))
+    
     const response = await fetch(`${host}/api/contact/addContact`, {
       method: 'POST',
       headers: {
@@ -27,16 +29,25 @@ const ContactState = (props) => {
   //get all the contacts
 
   const getContacts = async () => {
-    //Api call
-    const response = await fetch(`${host}/api/contact/fetchAllContact/`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'auth-token': localStorage.getItem('token'),
-      },
-    })
-    const json = await response.json()
-    setContact(json)
+    try {
+      const response = await fetch(`${host}/api/contact/fetchAllContact/`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': localStorage.getItem('token'),
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to get contacts');
+      }
+
+      const json = await response.json();
+      setContact(json);
+    } catch (error) {
+      console.error(error);
+      props.showAlert('Failed to get contacts', 'danger');
+    }
   }
 
   //edit contact
@@ -85,9 +96,33 @@ const ContactState = (props) => {
     props.showAlert('Contact Deleted', 'danger')
   }
 
+  const getContactDetail = async (id) => {
+    try {
+      const response = await fetch(`${host}/api/contact/fetchContact/${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': localStorage.getItem('token'),
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to get contact detail');
+      }
+
+      const json = await response.json();
+      props.showAlert(`Contact for ${json.firstName}`, 'success');
+      return json;
+    } catch (error) {
+      console.error(error);
+      props.showAlert('Failed to get contact detail', 'danger');
+      return null; 
+    }
+  }
+ 
   return (
     <ContactContext.Provider
-      value={{ contacts, addContacts, getContacts, editContact, deleteContact }}
+      value={{ contacts, addContacts, getContacts, editContact, deleteContact, getContactDetail }}
     >
       {props.children}
     </ContactContext.Provider>
