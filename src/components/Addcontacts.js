@@ -1,21 +1,28 @@
-import React, { useContext, useState } from 'react'
-import contactContext from '../context/contactContext'
-import Contacts from './Contact'
+import React, { useContext, useState } from 'react';
+import contactContext from '../context/contactContext';
+import Contacts from './Contact';
 
 function Addcontacts() {
-  const context = useContext(contactContext)
-  const { addContacts } = context
+  // Access the contact context
+  const context = useContext(contactContext);
+  const { addContacts } = context;
 
-  const [contact, setContact] = useState({ firstName: '', lastName: '', phoneNumber: '' })
+  // Define state to manage the form inputs
+  const [contact, setContact] = useState({ firstName: '', lastName: '', phoneNumber: '' });
+
+  // Handle form submission
   const handleClick = (e) => {
-    e.preventDefault()
-    addContacts(contact.firstName, contact.lastName, contact.phoneNumber)
-    setContact({ firstName: '', lastName: '', phoneNumber: '' })
+    e.preventDefault();
+    addContacts(contact.firstName, contact.lastName, contact.phoneNumber);
+    // Clear form inputs after submission
+    setContact({ firstName: '', lastName: '', phoneNumber: '' });
   }
 
+  // Update the state when input values change
   const onChange = (e) => {
-    setContact({ ...contact, [e.target.name]: e.target.value })
+    setContact({ ...contact, [e.target.name]: e.target.value });
   }
+
   return (
     <div>
       <div className="container m-3">
@@ -26,6 +33,7 @@ function Addcontacts() {
 
               <form>
                 <div className="form-group">
+                  {/* Input field for first name */}
                   <input
                     type="text"
                     className="form-control"
@@ -40,6 +48,7 @@ function Addcontacts() {
                   />
                 </div>
                 <div className="form-group">
+                  {/* Input field for last name */}
                   <input
                     type="text"
                     className="form-control"
@@ -54,6 +63,7 @@ function Addcontacts() {
                   />
                 </div>
                 <div className="form-group">
+                  {/* Input field for phone number */}
                   <input
                     type="number"
                     className="form-control"
@@ -69,6 +79,7 @@ function Addcontacts() {
                 </div>
 
                 <button
+                  // Disable the button if first name or last name is too short
                   disabled={contact.firstName.length < 5 || contact.lastName.length < 5}
                   type="submit"
                   className="btn btn-dark mt-2"
@@ -85,7 +96,7 @@ function Addcontacts() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Addcontacts
+export default Addcontacts;

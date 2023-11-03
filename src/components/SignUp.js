@@ -1,52 +1,58 @@
-import React, { useState } from 'react'
-import Alert from './Alert'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import Alert from './Alert';
+import { useNavigate } from 'react-router-dom';
 
 function Signup(props) {
   const [credentials, setCredentials] = useState({
     name: '',
     email: '',
     password: '',
-  })
-  let navigate = useNavigate()
+  });
+  let navigate = useNavigate();
+
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
-        const response = await fetch(
-          'https://hux-assessment-backend.vercel.app/api/auth/createUser',
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              name: credentials.name,
-              email: credentials.email,
-              password: credentials.password,
-            }),
+      const response = await fetch(
+        'https://hux-assessment-backend.vercel.app/api/auth/createUser',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
           },
-        )
-        const json = await response.json()
-        console.log(json)
-        if (!json.success) {
-          props.showAlert('Email with this your Already Exists', 'warning')
-        } else {
-          localStorage.setItem('token', json.authToken)
-          localStorage.setItem('name', json.name)
-          localStorage.setItem('success', json.success)
-          navigate('/login')
-          props.showAlert('Signup Success', 'success')
+          body: JSON.stringify({
+            name: credentials.name,
+            email: credentials.email,
+            password: credentials.password,
+          }),
         }
-      
+      );
+
+      const json = await response.json();
+
+      if (!json.success) {
+        // Show a warning alert if the email already exists
+        props.showAlert('Email with this email Already Exists', 'warning');
+      } else {
+        // Store authentication and user information in local storage
+        localStorage.setItem('token', json.authToken);
+        localStorage.setItem('name', json.name);
+        localStorage.setItem('success', json.success);
+        // Navigate to the login page and show a success alert
+        navigate('/login');
+        props.showAlert('Signup Success', 'success');
+      }
     } catch (error) {
-      props.showAlert('db not connected', 'warning')
+      // Show a warning alert for database connection issues
+      props.showAlert('db not connected', 'warning');
     }
   }
 
   const onChange = (e) => {
-    setCredentials({ ...credentials, [e.target.name]: e.target.value })
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
   }
+
   return (
     <div>
       <div className="container">
@@ -76,8 +82,7 @@ function Signup(props) {
               </div>
               <div className="mb-3">
                 <label htmlFor="email" className="form-label">
-                  <i className="fa-solid fa-envelope-circle-check"></i> Email
-                  address
+                  <i className="fa-solid fa-envelope-circle-check"></i> Email address
                 </label>
                 <input
                   type="email"
@@ -120,7 +125,7 @@ function Signup(props) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Signup
+export default Signup;

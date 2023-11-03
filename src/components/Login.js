@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
-import Alert from './Alert'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import Alert from './Alert';
+import { useNavigate } from 'react-router-dom';
 
 function Login(props) {
-  const [credentials, setCredentials] = useState({ email: '', password: '' })
-  let navigate = useNavigate()
+  const [credentials, setCredentials] = useState({ email: '', password: '' });
+  let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       const response = await fetch(
         'https://hux-assessment-backend.vercel.app/api/auth/loginUser',
@@ -20,27 +20,32 @@ function Login(props) {
             email: credentials.email,
             password: credentials.password,
           }),
-        },
-      )
-      const json = await response.json()
+        }
+      );
+      const json = await response.json();
 
       if (json.success) {
-        localStorage.setItem('token', json.authToken)
-        localStorage.setItem('name', json.name)
-        localStorage.setItem('success', json.success)
-        props.showAlert('Login Success', 'success')
-        navigate('/')
+        // Store authentication and user information in local storage
+        localStorage.setItem('token', json.authToken);
+        localStorage.setItem('name', json.name);
+        localStorage.setItem('success', json.success);
+        // Show a success alert and navigate to the home page
+        props.showAlert('Login Success', 'success');
+        navigate('/');
       } else {
-        props.showAlert('Invalid Credentials', 'warning')
+        // Show a warning alert for invalid credentials
+        props.showAlert('Invalid Credentials', 'warning');
       }
     } catch (error) {
-      props.showAlert(`db not connected ${error}`, 'warning')
+      // Show a warning alert for database connection issues
+      props.showAlert(`db not connected ${error}`, 'warning');
     }
   }
 
   const onChange = (e) => {
-    setCredentials({ ...credentials, [e.target.name]: e.target.value })
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
   }
+
   return (
     <div>
       <div className="container">
@@ -53,8 +58,7 @@ function Login(props) {
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="email" className="form-label">
-                  <i className="fa-solid fa-envelope-circle-check"></i> Email
-                  address
+                  <i className="fa-solid fa-envelope-circle-check"></i> Email address
                 </label>
                 <input
                   type="email"
@@ -98,7 +102,7 @@ function Login(props) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;

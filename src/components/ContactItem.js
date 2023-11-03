@@ -1,12 +1,12 @@
-import React, { useContext } from 'react'
-import moment from 'moment'
-import contactContext from '../context/contactContext'
-import {Link, useNavigate } from 'react-router-dom'
+import React, { useContext } from 'react';
+import moment from 'moment';
+import contactContext from '../context/contactContext';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Contactitem(props) {
-  const context = useContext(contactContext)
-  const { deleteContact } = context
-  const { contact, updateContact } = props
+  const context = useContext(contactContext);
+  const { deleteContact } = context;
+  const { contact, updateContact } = props;
 
   return (
     <tr>
@@ -18,7 +18,8 @@ function Contactitem(props) {
         <i
           className="far fa-edit mx-2"
           onClick={() => {
-            updateContact(contact)
+            // Trigger the update action when the edit icon is clicked
+            updateContact(contact);
           }}
         ></i>
       </td>
@@ -26,13 +27,17 @@ function Contactitem(props) {
         <i
           className="far fa-trash-alt mx-2"
           onClick={() => {
-            deleteContact(contact?._id)
+            // Trigger the delete action when the trash icon is clicked
+            deleteContact(contact?._id);
           }}
         ></i>
       </td>
-      <td><Link to={`/contact/fetchContact/${contact?._id}`}>View Contact </Link></td>
+      <td>
+        {/* Provide a link to view the contact's details */}
+        <Link to={`/contact/fetchContact/${contact?._id}`}>View Contact</Link>
+      </td>
     </tr>
-  )
+  );
 }
 
-export default Contactitem
+export default Contactitem;

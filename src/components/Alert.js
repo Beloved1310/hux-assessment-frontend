@@ -1,7 +1,8 @@
-import React from 'react'
+import React from 'react';
 
 export default function Alert(props) {
   return (
+    // Render the alert only if `props.alert` is truthy
     props.alert && (
       <div>
         <div
@@ -9,9 +10,10 @@ export default function Alert(props) {
           role="alert"
         >
           <strong></strong>
+          {/* Display the message from `props.alert` */}
           {props.alert.msg}
         </div>
       </div>
     )
-  )
+  );
 }

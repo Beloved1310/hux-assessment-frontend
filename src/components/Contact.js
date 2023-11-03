@@ -1,45 +1,52 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
-import contactContext from '../context/contactContext'
-import {Link, useNavigate } from 'react-router-dom'
-import Contactitem from './ContactItem'
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import contactContext from '../context/contactContext';
+import { Link, useNavigate } from 'react-router-dom';
+import Contactitem from './ContactItem';
+
 const Contacts = () => {
-  let navigate = useNavigate()
-  const context = useContext(contactContext)
-  const { contacts, getContacts, editContact } = context
+  let navigate = useNavigate();
+  const context = useContext(contactContext);
+  const { contacts, getContacts, editContact } = context;
+
   useEffect(() => {
+    // Check if there's a token in localStorage
     if (localStorage.getItem('token')) {
-      getContacts()
+      getContacts();
     } else {
-      navigate('/login')
+      // Redirect to the login page if no token is found
+      navigate('/login');
     }
-  }, [])
-  const ref = useRef(null)
-  const refClose = useRef(null)
+  }, []);
+
+  const ref = useRef(null);
+  const refClose = useRef(null);
+
   const [contact, setContact] = useState({
     id: '',
     efirstName: '',
     elastName: '',
     ephoneNumber: '',
-  })
+  });
 
   const updateContact = (currentContact) => {
-    ref.current.click()
-    console.log(currentContact.phoneNumber)
+    ref.current.click();
+    // Set the contact details to edit
     setContact({
       id: currentContact._id,
       efirstName: currentContact.firstName,
       elastName: currentContact.lastName,
       ephoneNumber: currentContact.phoneNumber,
-    })
+    });
   }
 
   const handleClick = (e) => {
-    editContact(contact.id, contact.efirstName, contact.elastName, contact.ephoneNumber)
-    refClose.current.click()
+    // Trigger the edit action and close the modal
+    editContact(contact.id, contact.efirstName, contact.elastName, contact.ephoneNumber);
+    refClose.current.click();
   }
 
   const onChange = (e) => {
-    setContact({ ...contact, [e.target.name]: e.target.value })
+    setContact({ ...contact, [e.target.name]: e.target.value });
   }
 
   return (
@@ -47,7 +54,8 @@ const Contacts = () => {
       <div className="display-4 text-primary text-center">Contacts</div>
 
       <div className="container mx-2">
-        {contact.length === 0 && 'No Contacts to display'}
+        {/* Display a message if no contacts are available */}
+        {contacts.length === 0 && 'No Contacts to display'}
       </div>
 
       <table className="table">
@@ -58,18 +66,14 @@ const Contacts = () => {
             <th scope="col">Date</th>
             <th scope="col">PhoneNumber</th>
             <th scope="col">Update</th>
-            <th scope="col">delete</th>
+            <th scope="col">Delete</th>
           </tr>
         </thead>
         <tbody>
-          {contacts.map((contact) => {
-            return (
-              <Contactitem key={contact._id} updateContact={updateContact} contact={contact} />  
-              
-            )
-            
-          })}
-            
+          {contacts.map((contact) => (
+            // Map each contact to a ContactItem component
+            <Contactitem key={contact._id} updateContact={updateContact} contact={contact} />
+          ))}
         </tbody>
       </table>
 
@@ -174,7 +178,7 @@ const Contacts = () => {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default Contacts
+export default Contacts;

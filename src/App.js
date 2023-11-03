@@ -10,17 +10,22 @@ import ContactState from './context/contactState'
 import ContactDetail from './components/ContactDetail'
 
 function App() {
+  // Define state for displaying alerts
   const [alert, setAlert] = useState(null)
+
+  // Function to show alerts with a specific message and type
   const showAlert = (message, type) => {
     setAlert({
       msg: message,
       type: type,
     })
 
+    // Clear the alert after 2 seconds
     setTimeout(() => {
       setAlert(null)
     }, 2000)
   }
+
   return (
     <div>
       <ContactState showAlert={showAlert}>
@@ -44,12 +49,12 @@ function App() {
               path="/login"
               element={<Login showAlert={showAlert} />}
             />
-            <Route exact
-            path="/contact/fetchContact/:id"   
-            element={<ContactDetail showAlert={ContactDetail}/>}
+            <Route
+              exact
+              path="/contact/fetchContact/:id"
+              element={<ContactDetail showAlert={showAlert} />}
             />
           </Routes>
-          
         </Router>
       </ContactState>
     </div>

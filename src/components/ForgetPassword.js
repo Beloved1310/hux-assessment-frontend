@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
-import Alert from './Alert'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import Alert from './Alert';
+import { useNavigate } from 'react-router-dom';
 
 function ForgetPassword(props) {
-  const [credentials, setCredentials] = useState({ email: '', newPassword: '' })
-  let navigate = useNavigate()
+  const [credentials, setCredentials] = useState({ email: '', newPassword: '' });
+  let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       const response = await fetch(
         'https://hux-assessment-backend.vercel.app//api/auth/forgetPassword',
@@ -20,27 +20,31 @@ function ForgetPassword(props) {
             email: credentials.email,
             newPassword: credentials.newPassword,
           }),
-        },
-      )
-      const json = await response.json()
+        }
+      );
+      const json = await response.json();
 
       if (json.success) {
-        localStorage.setItem('token', json.authToken)
-        localStorage.setItem('name', json.name)
-        localStorage.setItem('success', json.success)
-        props.showAlert('Password Updated, Proceed to Login', 'success')
-        navigate('/login')
+        localStorage.setItem('token', json.authToken);
+        localStorage.setItem('name', json.name);
+        localStorage.setItem('success', json.success);
+        // Show a success alert and navigate to the login page
+        props.showAlert('Password Updated, Proceed to Login', 'success');
+        navigate('/login');
       } else {
-        props.showAlert('Invalid Credentials', 'warning')
+        // Show a warning alert for invalid credentials
+        props.showAlert('Invalid Credentials', 'warning');
       }
     } catch (error) {
-      props.showAlert(`db not connected ${error}`, 'warning')
+      // Show a warning alert for database connection issues
+      props.showAlert(`db not connected ${error}`, 'warning');
     }
   }
 
   const onChange = (e) => {
-    setCredentials({ ...credentials, [e.target.name]: e.target.value })
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
   }
+
   return (
     <div>
       <div className="container">
@@ -53,8 +57,7 @@ function ForgetPassword(props) {
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="email" className="form-label">
-                  <i className="fa-solid fa-envelope-circle-check"></i> Email
-                  address
+                  <i className="fa-solid fa-envelope-circle-check"></i> Email address
                 </label>
                 <input
                   type="email"
@@ -98,7 +101,7 @@ function ForgetPassword(props) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default ForgetPassword
+export default ForgetPassword;
